@@ -1,23 +1,23 @@
 DT_RU_LOCALE=function(){
   return(list(
-    processing= "Подождите...",
-    search= "Поиск:",
-    lengthMenu= "Показать _MENU_ записей",
-    info= "Записи с _START_ до _END_ из _TOTAL_ записей",
-    infoEmpty= "Нет записей",
-    infoFiltered= "(отфильтровано из _MAX_ записей)",
+    processing= "ГЏГ®Г¤Г®Г¦Г¤ГЁГІГҐ...",
+    search= "ГЏГ®ГЁГ±ГЄ:",
+    lengthMenu= "ГЏГ®ГЄГ Г§Г ГІГј _MENU_ Г§Г ГЇГЁГ±ГҐГ©",
+    info= "Г‡Г ГЇГЁГ±ГЁ Г± _START_ Г¤Г® _END_ ГЁГ§ _TOTAL_ Г§Г ГЇГЁГ±ГҐГ©",
+    infoEmpty= "ГЌГҐГІ Г§Г ГЇГЁГ±ГҐГ©",
+    infoFiltered= "(Г®ГІГґГЁГ«ГјГІГ°Г®ГўГ Г­Г® ГЁГ§ _MAX_ Г§Г ГЇГЁГ±ГҐГ©)",
     infoPostFix= "",
-    loadingRecords= "Загрузка записей...",
-    zeroRecords= "Записи отсутствуют.",
-    emptyTable= "В таблице отсутствуют данные",
+    loadingRecords= "Г‡Г ГЈГ°ГіГ§ГЄГ  Г§Г ГЇГЁГ±ГҐГ©...",
+    zeroRecords= "Г‡Г ГЇГЁГ±ГЁ Г®ГІГ±ГіГІГ±ГІГўГіГѕГІ.",
+    emptyTable= "Г‚ ГІГ ГЎГ«ГЁГ¶ГҐ Г®ГІГ±ГіГІГ±ГІГўГіГѕГІ Г¤Г Г­Г­Г»ГҐ",
     paginate=list(
-      first= "Начало",
-      previous= "Предыдущая",
-      "next"= "Следующая",
-      last= "Конец"),
+      first= "ГЌГ Г·Г Г«Г®",
+      previous= "ГЏГ°ГҐГ¤Г»Г¤ГіГ№Г Гї",
+      "next"= "Г‘Г«ГҐГ¤ГіГѕГ№Г Гї",
+      last= "ГЉГ®Г­ГҐГ¶"),
     aria=list(
-      sortAscending= ": активировать для сортировки столбца по возрастанию",
-      sortDescending= ": активировать для сортировки столбца по убыванию")
+      sortAscending= ": Г ГЄГІГЁГўГЁГ°Г®ГўГ ГІГј Г¤Г«Гї Г±Г®Г°ГІГЁГ°Г®ГўГЄГЁ Г±ГІГ®Г«ГЎГ¶Г  ГЇГ® ГўГ®Г§Г°Г Г±ГІГ Г­ГЁГѕ",
+      sortDescending= ": Г ГЄГІГЁГўГЁГ°Г®ГўГ ГІГј Г¤Г«Гї Г±Г®Г°ГІГЁГ°Г®ГўГЄГЁ Г±ГІГ®Г«ГЎГ¶Г  ГЇГ® ГіГЎГ»ГўГ Г­ГЁГѕ")
   ))
 }
 
@@ -82,9 +82,9 @@ get_season_data=function(db_path,pass,ses){
   sql=paste0(
     "select 
 Month(date) as mm,
-    sum(Operations.pricein*qtty ) as \"Сумма_покупки\"    ,
+    sum(Operations.pricein*qtty ) as \"Г‘ГіГ¬Г¬Г _ГЇГ®ГЄГіГЇГЄГЁ\"    ,
     sum(qtty) as sum_qt,
-    sum(Operations.priceout*qtty ) as \"Сумма_продажи\",
+    sum(Operations.priceout*qtty ) as \"Г‘ГіГ¬Г¬Г _ГЇГ°Г®Г¤Г Г¦ГЁ\",
     IIF(ISNULL(parent_gr.Name),'_',parent_gr.Name)  as parent_gr
     from (((((Operations
     inner join     operationtype on  (operationtype.id=Operations.opertype ) )
@@ -104,7 +104,7 @@ Month(date) as mm,
   return(dat)
 }
 
-
+ 
 
 get_data_for_pivot_season=function(db_path,pass,ses){
   con=connect_to_db(db_path,pass)
@@ -114,10 +114,10 @@ get_data_for_pivot_season=function(db_path,pass,ses){
     Month(date) as mm,
     date as date_,
     Operations.pricein ,
-    Operations.pricein*qtty  as \"Сумма_покупки\"    ,
+    Operations.pricein*qtty  as \"Г‘ГіГ¬Г¬Г _ГЇГ®ГЄГіГЇГЄГЁ\"    ,
     qtty as sum_qt,
     Operations.priceout,
-    Operations.priceout*qtty  as \"Сумма_продажи\",
+    Operations.priceout*qtty  as \"Г‘ГіГ¬Г¬Г _ГЇГ°Г®Г¤Г Г¦ГЁ\",
     IIF(ISNULL(parent_gr.Name),'_',parent_gr.Name)  as parent_gr
     from (((((Operations
     inner join     operationtype on  (operationtype.id=Operations.opertype ) )
@@ -131,20 +131,20 @@ get_data_for_pivot_season=function(db_path,pass,ses){
     "
   )
   dat=sqlQuery(con,sql)
-  dat_gr=dat%>%summarise(CNT_=sum(sum_qt),TOTAL_SUM_OUT=sum(`Сумма_продажи`),
-                         TOTAL_SUM_IN=sum(`Сумма_покупки`),
+  dat_gr=dat%>%summarise(CNT_=sum(sum_qt),TOTAL_SUM_OUT=sum(`Г‘ГіГ¬Г¬Г _ГЇГ°Г®Г¤Г Г¦ГЁ`),
+                         TOTAL_SUM_IN=sum(`Г‘ГіГ¬Г¬Г _ГЇГ®ГЄГіГЇГЄГЁ`),
                          CNT_CHEQ=n_distinct(Acct))
   
-  dat_gr_ch=dat%>%group_by(Acct)%>%summarise(sum_OUT=sum(`Сумма_продажи`), sum_IN=sum(`Сумма_покупки`) , CNT_ch=sum(sum_qt))%>%
+  dat_gr_ch=dat%>%group_by(Acct)%>%summarise(sum_OUT=sum(`Г‘ГіГ¬Г¬Г _ГЇГ°Г®Г¤Г Г¦ГЁ`), sum_IN=sum(`Г‘ГіГ¬Г¬Г _ГЇГ®ГЄГіГЇГЄГЁ`) , CNT_ch=sum(sum_qt))%>%
     summarise(AVG_OUT=mean(sum_OUT),AVG_IN=mean(sum_IN) , AVG_CNT=mean(CNT_ch))
   odbcClose(con)
   
-  dat_itog=data.frame("Продано товара"=dat_gr$CNT_ , "Сумма продаж"=dat_gr$TOTAL_SUM_OUT,
-                      "Закупочная цена"=dat_gr$TOTAL_SUM_IN ,
-                      "Количество чеков"=dat_gr$CNT_CHEQ,
-                      "Средний чек"=dat_gr_ch$AVG_OUT,
-                      "средняя закупочная цена чека"=dat_gr_ch$AVG_IN,
-                      "средний размер чека"=dat_gr_ch$AVG_CNT)
+  dat_itog=data.frame("ГЏГ°Г®Г¤Г Г­Г® ГІГ®ГўГ Г°Г "=dat_gr$CNT_ , "Г‘ГіГ¬Г¬Г  ГЇГ°Г®Г¤Г Г¦"=dat_gr$TOTAL_SUM_OUT,
+                      "Г‡Г ГЄГіГЇГ®Г·Г­Г Гї Г¶ГҐГ­Г "=dat_gr$TOTAL_SUM_IN ,
+                      "ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г·ГҐГЄГ®Гў"=dat_gr$CNT_CHEQ,
+                      "Г‘Г°ГҐГ¤Г­ГЁГ© Г·ГҐГЄ"=dat_gr_ch$AVG_OUT,
+                      "Г±Г°ГҐГ¤Г­ГїГї Г§Г ГЄГіГЇГ®Г·Г­Г Гї Г¶ГҐГ­Г  Г·ГҐГЄГ "=dat_gr_ch$AVG_IN,
+                      "Г±Г°ГҐГ¤Г­ГЁГ© Г°Г Г§Г¬ГҐГ° Г·ГҐГЄГ "=dat_gr_ch$AVG_CNT)
  
   return( reshape2::melt(dat_itog,measure.vars=colnames(dat_itog)) )
 }
@@ -152,19 +152,19 @@ get_oper_data_filters=function(db_path,pass){
   con=connect_to_db(db_path,pass)
   sql=paste0(
     "select 
-    goods.name2 as \"Товар\",
-    partners.company2 as \"Партнер\",
-    qtty as \"Количество\",
-    Operations.pricein as \"Цена_покупки\",
-    Operations.priceout as \"Цена_продажи\",
-    Operations.priceout-Operations.pricein as \"Надценка\",
-    qtty*Operations.pricein  as \"Стоимость_покупки\",
-    qtty*Operations.priceout as \"Стоимость_продажи\",
-    qtty*(Operations.priceout-Operations.pricein)  as \"Добавочная_стоимость\",
-    partnersgroups.Name as \"Тип_партнера\"   ,
-    goodsgroups.Name as  \"Группа_расшифровка\"  ,
-    parent_gr.Name  as  \"Группа\",
-    [date] as  \"Дата\"
+    goods.name2 as \"Г’Г®ГўГ Г°\",
+    partners.company2 as \"ГЏГ Г°ГІГ­ГҐГ°\",
+    qtty as \"ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ®\",
+    Operations.pricein as \"Г–ГҐГ­Г _ГЇГ®ГЄГіГЇГЄГЁ\",
+    Operations.priceout as \"Г–ГҐГ­Г _ГЇГ°Г®Г¤Г Г¦ГЁ\",
+    Operations.priceout-Operations.pricein as \"ГЌГ Г¤Г¶ГҐГ­ГЄГ \",
+    qtty*Operations.pricein  as \"Г‘ГІГ®ГЁГ¬Г®Г±ГІГј_ГЇГ®ГЄГіГЇГЄГЁ\",
+    qtty*Operations.priceout as \"Г‘ГІГ®ГЁГ¬Г®Г±ГІГј_ГЇГ°Г®Г¤Г Г¦ГЁ\",
+    qtty*(Operations.priceout-Operations.pricein)  as \"Г„Г®ГЎГ ГўГ®Г·Г­Г Гї_Г±ГІГ®ГЁГ¬Г®Г±ГІГј\",
+    partnersgroups.Name as \"Г’ГЁГЇ_ГЇГ Г°ГІГ­ГҐГ°Г \"   ,
+    goodsgroups.Name as  \"ГѓГ°ГіГЇГЇГ _Г°Г Г±ГёГЁГґГ°Г®ГўГЄГ \"  ,
+    parent_gr.Name  as  \"ГѓГ°ГіГЇГЇГ \",
+    [date] as  \"Г„Г ГІГ \"
     from (((((Operations
     inner join     operationtype on  (operationtype.id=Operations.opertype ) )
     inner join     goods on  (goods.id=Operations.goodid ) )
@@ -184,14 +184,14 @@ get_oper_data_filters=function(db_path,pass){
 
 create_numeric_ui=function(title,id){
   fluidRow(id=paste0("row_",id),column(4,h4(title)),
-    column(4,numericInput(inputId = paste0("low_",id),label = "от",value="")),
-    column(4,numericInput(inputId = paste0("top_",id),label = "до",value="")))
+    column(4,numericInput(inputId = paste0("low_",id),label = "Г®ГІ",value="")),
+    column(4,numericInput(inputId = paste0("top_",id),label = "Г¤Г®",value="")))
   
 }
 
 create_character_ui=function(title,id,ch){
   fluidRow(id=paste0("row_",id),column(2,h4(title)),
-           column(2,selectInput(inputId = paste0("type_",id),label = "",choices = c("В списке","Не в списке"))),
+           column(2,selectInput(inputId = paste0("type_",id),label = "",choices = c("Г‚ Г±ГЇГЁГ±ГЄГҐ","ГЌГҐ Гў Г±ГЇГЁГ±ГЄГҐ"))),
            column(8,selectInput(inputId = paste0("list_",id),label = "",choices = ch,multiple = T)))
   
 }
